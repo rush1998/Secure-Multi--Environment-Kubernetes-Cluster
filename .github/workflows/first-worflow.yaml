@@ -32,17 +32,17 @@ jobs:
       # Step 4: Terraform Init
       - name: Terraform Init
         run: terraform init
-        working-directory: EKS/Dev
+        working-directory: EKS/Dev/module_eks
 
       # Step 5: Terraform Validate
       - name: Terraform Validate
         run: terraform validate
-        working-directory: EKS/Dev
+        working-directory: EKS/Dev/module_eks
 
       # Step 6: Terraform Plan
       - name: Terraform Plan
         run: terraform plan -out=tfplan
-        working-directory: EKS/Dev
+        working-directory: EKS/Dev/module_eks
 
       - name: Terraform apply
         if: github.ref == 'refs/heads/main'
