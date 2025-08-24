@@ -62,4 +62,28 @@ jobs:
           kubectl apply -f viewer-cluster-role.yaml
           kubectl apply -f viewer-cluster-role-binding.yaml
         working-directory: EKS/Dev/yaml_files
-       
+
+      - name: Install Helm
+        run: |
+          curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+          sudo apt-get install apt-transport-https --yes
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+          sudo apt-get update
+          sudo apt-get install helm -y
+          
+      # Install Prometheus with LoadBalancer
+      - name: Install Prometheus
+        run: |
+          helm upgrade --install my-prometheus prometheus-community/prometheus \
+          --version 27.32.0 \
+          --namespace monitoring --create-namespace \
+          --set server.service.type=LoadBalancer
+
+      # Install Grafana with LoadBalancer
+      - name: Install Grafana
+        run: |
+          helm upgrade --install my-grafana grafana/grafana \
+          --version 9.3.4 \
+          --namespace monitoring --create-namespace \
+          --set service.type=LoadBalancer \
+          --set adminPassword='YourSecurePassword'
