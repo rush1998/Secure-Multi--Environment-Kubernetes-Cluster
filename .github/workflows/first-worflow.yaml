@@ -11,10 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Clone the repo
+      # Step 1: Clone repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Run a test command to verify repo is cloned
-      - name: List repo files
-        run: ls -la
+      # Step 2: Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ca-central-1   
+
+      # Step 3: Verify connection (example: list S3 buckets)
+      - name: Test AWS CLI
+        run: aws s3 ls
