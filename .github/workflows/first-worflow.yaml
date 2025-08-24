@@ -43,3 +43,10 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan
         working-directory: EKS/Dev
+
+      - name: Terraform apply
+        if: github.ref == 'refs/heads/main'
+        id: apply
+        run: |
+          terraform apply --auto-approve=true 
+             
