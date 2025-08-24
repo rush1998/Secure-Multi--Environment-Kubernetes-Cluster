@@ -32,10 +32,12 @@ jobs:
       # Step 4: Terraform Init
       - name: Terraform Init
         run: terraform init
+        working-directory: EKS/Dev
 
       # Step 5: Terraform Validate
       - name: Terraform Validate
         run: terraform validate
+        working-directory: EKS/Dev
 
       # Step 6: Terraform Plan
       - name: Terraform Plan
