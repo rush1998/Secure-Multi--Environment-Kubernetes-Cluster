@@ -49,4 +49,17 @@ jobs:
         id: apply
         run: |
           terraform apply --auto-approve=true 
-             
+      
+      # Step 7: Update kubeconfig file      
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig \
+          --region ca-central-1 \
+          --name first-cluster
+
+      - name: Depploy role and role binding 
+        run : |
+          kubectl apply -f viewer-cluster-role.yaml
+          kubectl apply -f viewer-cluster-role-binding.yaml
+        working-directory: EKS/Dev/yaml_files
+       
