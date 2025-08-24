@@ -1,0 +1,20 @@
+name: EKS cluster creation on development environment
+
+on:
+  workflow_dispatch:   
+  push:
+    branches:
+        - 'development'
+
+jobs:
+  clone-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Clone the repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Run a test command to verify repo is cloned
+      - name: List repo files
+        run: ls -la
