@@ -75,16 +75,16 @@ jobs:
       # Install Prometheus with LoadBalancer
       - name: Install Prometheus
         run: |
-          helm upgrade --install my-prometheus prometheus-community/prometheus \
-          --version 27.32.0 \
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts \
+          helm install my-prometheus prometheus-community/prometheus --version 27.32.0 \
           --namespace monitoring --create-namespace \
           --set server.service.type=LoadBalancer
 
       # Install Grafana with LoadBalancer
       - name: Install Grafana
         run: |
-          helm upgrade --install my-grafana grafana/grafana \
-          --version 9.3.4 \
+          helm repo add grafana https://grafana.github.io/helm-charts \
+          helm install my-grafana grafana/grafana --version 9.3.4 \
           --namespace monitoring --create-namespace \
           --set service.type=LoadBalancer \
           --set adminPassword='YourSecurePassword'
