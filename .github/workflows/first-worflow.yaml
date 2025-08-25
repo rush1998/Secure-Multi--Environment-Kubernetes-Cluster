@@ -115,7 +115,7 @@ jobs:
       # Install Prometheus with LoadBalancer
       - name: Install Prometheus
         run: |
-          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts \
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
           helm install my-prometheus prometheus-community/prometheus --version 27.32.0 \
           --namespace monitoring --create-namespace \
           --set server.service.type=LoadBalancer
