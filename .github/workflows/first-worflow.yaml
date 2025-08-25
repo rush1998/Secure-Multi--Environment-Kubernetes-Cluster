@@ -43,14 +43,14 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan
         working-directory: EKS/Dev/module_eks
-
-      - name: Terraform apply
-        if: github.ref == 'refs/heads/main'
+      
+      # Step 7: Terraform Plan
+      - name: Terraform apply  ###if: github.ref == 'refs/heads/main'
         id: apply
         run: |
           terraform apply --auto-approve=true 
       
-      # Step 7: Update kubeconfig file      
+      # Step 8: Update kubeconfig file      
       - name: Update kubeconfig
         run: |
           aws eks update-kubeconfig \
