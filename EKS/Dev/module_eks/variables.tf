@@ -14,11 +14,11 @@ variable "aws_region" {
 }
 
 variable "cluster_name" {
-  default = "first-cluster"
+  default     = "first-cluster"
   description = "Name of the cluster"
 }
 
 variable "cluster_vpc_name" {
-  default = "first-cluster-vpc"
+  default     = "first-cluster-vpc"
   description = "Name of cluster VPC"
 }
