@@ -124,7 +124,8 @@ jobs:
       - name: Install Grafana
         run: |
           helm repo add grafana https://grafana.github.io/helm-charts \
-          helm install my-grafana grafana/grafana --version 9.3.4 \
+          helm install my-grafana grafana/grafana \
+          --version 9.3.4 \
           --namespace monitoring --create-namespace \
           --set service.type=LoadBalancer \
           --set adminPassword='YourSecurePassword'
