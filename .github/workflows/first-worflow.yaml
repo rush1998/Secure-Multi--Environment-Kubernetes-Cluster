@@ -111,21 +111,32 @@ jobs:
           echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
           sudo apt-get update
           sudo apt-get install helm -y
-          
-      # Install Prometheus with LoadBalancer
+
+# Install Prometheus with LoadBalancer
       - name: Install Prometheus
         run: |
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo update
+          if helm status my-prometheus -n monitoring >/dev/null 2>&1; then
+          echo "Prometheus already installed. Skipping..."
+          else
+          echo "Installing Prometheus..."
           helm install my-prometheus prometheus-community/prometheus --version 27.32.0 \
           --namespace monitoring --create-namespace \
           --set server.service.type=LoadBalancer
+          fi
 
-      # Install Grafana with LoadBalancer
+# Install Grafana with LoadBalancer
       - name: Install Grafana
         run: |
-          helm repo add grafana https://grafana.github.io/helm-charts \
-          helm install my-grafana grafana/grafana \
-          --version 9.3.4 \
+          helm repo add grafana https://grafana.github.io/helm-charts
+          helm repo update
+          if helm status my-grafana -n monitoring >/dev/null 2>&1; then
+          echo "Grafana already installed. Skipping..."
+          else
+          echo "Installing Grafana..."
+          helm install my-grafana grafana/grafana --version 9.3.4 \
           --namespace monitoring --create-namespace \
           --set service.type=LoadBalancer \
           --set adminPassword='YourSecurePassword'
+          fi
